@@ -52,8 +52,8 @@ Suppliers  ──┘              ├── Order Items ──┐
 ```
 
 Key design decisions:
-- `Gender` stored as `NUMBER` in OLTP (0/1/2) and transformed to `VARCHAR2` during ETL
-- Quoted identifiers (`"Order Items"`, `"Shipping Info"`) preserve original naming
+- Gender stored as NUMBER in OLTP (0/1/2) and transformed to VARCHAR2 during ETL
+- Quoted identifiers ("Order Items", "Shipping Info") preserve original naming
 - Check constraints enforce non-negative prices, inventory, and valid age range
 - Indexes on all foreign key columns for join performance
 
@@ -70,7 +70,7 @@ DimSupplier ── DimProduct ── SalesFact ── DimCustomer
 ```
 
 **SalesFact** grain: one row per order line item  
-**Degenerate dimension**: `OrderID` retained directly in the fact table  
+**Degenerate dimension**: OrderID retained directly in the fact table  
 **DimTime**: populated via PL/SQL loop — one row per day from 2020-01-01 to 2030-12-31
 
 ---
@@ -79,11 +79,11 @@ DimSupplier ── DimProduct ── SalesFact ── DimCustomer
 
 | Query | Operator | Business Question |
 |---|---|---|
-| Revenue by Category & Month | `ROLLUP` | Which categories peak in which months? |
-| Sales by Category & Gender | `CUBE` | Which genders buy which product types? |
-| Sales by Customer & Category | `ROLLUP` | What does each customer tend to buy? |
-| Sales by Category & Age Group | `CUBE` | Which age groups drive which categories? |
-| Revenue by Product & Time | `ROLLUP` | How do individual products trend over time? |
+| Revenue by Category & Month | ROLLUP | Which categories peak in which months? |
+| Sales by Category & Gender | CUBE | Which genders buy which product types? |
+| Sales by Customer & Category | ROLLUP | What does each customer tend to buy? |
+| Sales by Category & Age Group | CUBE | Which age groups drive which categories? |
+| Revenue by Product & Time | ROLLUP | How do individual products trend over time? |
 
 ---
 
